@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+        integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Python + Nodejs</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Python + nodejs</h1>
+        <hr>
+        <h3>Python files</h3>
+        <ul>
+            <li>hello.py : prints hello</li>
+            <li>add.py: recives 2 numbers and prints the sum</li>
+        </ul>
+        <hr>
+        <button id="hello-btn">Run hello.py</button>
+        <button id="add-btn" class="button-primary">Run add.py</button>
+        <div class="row">
+            <div class="six columns">
+                <label for="num1">Num 1</label>
+                <input class="u-full-width" type="number" id="num1" value="5">
+            </div>
+            <div class="six columns">
+                <label for="num2">Num 2</label>
+                <input class="u-full-width" type="number" id="num2" value="5">
+            </div>
+        </div>
+
+        <h3>Output:</h3>
+        <div>
+            <pre><code id="output"></code></pre>
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById("output")
+        // hello btn
+        document.getElementById("hello-btn").addEventListener("click", () => {
+            fetch("/api/hello").then((response) => response.json())
+                .then((data) => {
+                    output.innerText=data.body
+                })
+        })
+
+        // add btn
+        document.getElementById("add-btn").addEventListener("click", () => {
+            const num1 = document.getElementById("num1").value
+            const num2 = document.getElementById("num2").value
+            fetch(`/api/add/${num1}/${num2}`).then((response) => response.json())
+                .then((data) => {
+                    output.innerText=data.body
+                })
+        })
+
+    </script>
+</body>
+
+</html>
